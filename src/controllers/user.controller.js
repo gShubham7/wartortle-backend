@@ -29,10 +29,46 @@ const profile = async (req, res) => {
 //all lectures displayed........
 const alllectures = async (req, res) => {
   try {
-    const lectures = await LectureModel.find();
+    const lectures = await LectureModel.aggregate([
+      {
+        $project: {
+          "snippet.title": 1,
+          "snippet.description": 1,
+          "snippet.thumbnails.medium.url": 1,
+          "snippet.playlistId": 1,
+          "snippet.resourceId.videoId": 1,
+        },
+      },
+      { $limit: 35 },
+    ]);
     return res.status(200).send(lectures);
   } catch (err) {
     return res.status(401).send({ error: "Invalid token" });
+  }
+};
+
+const playlist = async (req, res) => {
+  const { playlist } = req.params;
+  try {
+    const videolist = await LectureModel.find({
+      "snippet.playlistId": playlist,
+    });
+    return res.status(200).send(videolist);
+  } catch (err) {
+    return res.status(400).send({ message: err.message });
+  }
+};
+
+//particular video display.................
+const video = async (req, res) => {
+  const { video } = req.params;
+  try {
+    const indi_video = await LectureModel.find({
+      "snippet.resourceId.videoId": video,
+    });
+    return res.status(200).send(indi_video);
+  } catch (err) {
+    return res.status(400).send({ message: err.message });
   }
 };
 
@@ -80,4 +116,6 @@ module.exports = {
   alllectures,
   searchLecture,
   getTeachers,
+  playlist,
+  video,
 };

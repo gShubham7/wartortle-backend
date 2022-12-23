@@ -5,7 +5,9 @@ const {
   profile,
   alllectures,
   searchLecture,
-  getTeachers
+  getTeachers,
+  playlist,
+  video
 } = require("../controllers/user.controller");
 //admin routes......................
 
@@ -14,6 +16,12 @@ Router.post("/profile", profile);
 
 //all posts displayed........
 Router.get("/alllectures", alllectures);
+
+//playlist displayed here........
+Router.get("/lecture/:playlist", playlist);
+
+//particular video........
+Router.get("/:video", video);
 
 //search lectures........
 Router.get("/:std/:sub", searchLecture);
