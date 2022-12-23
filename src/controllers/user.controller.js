@@ -89,8 +89,7 @@ const searchLecture = async (req, res) => {
         "snippet.title": { $regex: sub },
       });
       return res.status(200).send(lectures);
-    }
-    console.log(std, sub);
+    }   
     const lectures = await LectureModel.find({
       "snippet.title": { $regex: `${std} ${sub}` },
     });
@@ -103,7 +102,7 @@ const searchLecture = async (req, res) => {
 const getTeachers = async (req, res) => {
   try {
     const teachers = await UserModel.find({ role: "Teacher" });
-    return res.status(200).send({ teachers });
+    return res.status(200).send(teachers);
   } catch (err) {
     return res.status(401).send({ error: err.message });
   }

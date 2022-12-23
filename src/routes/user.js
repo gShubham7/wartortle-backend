@@ -21,7 +21,7 @@ Router.get("/alllectures", alllectures);
 Router.get("/lecture/:playlist", playlist);
 
 //particular video........
-Router.get("/:video", video);
+Router.get("/list/:video", video);
 
 //search lectures........
 Router.get("/:std/:sub", searchLecture);
